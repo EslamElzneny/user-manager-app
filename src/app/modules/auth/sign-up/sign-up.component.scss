@@ -1,0 +1,32 @@
+.sign-up-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 50px 0;
+
+  .form-sign-up{
+    background: #fff;
+    width: 90%;
+    max-width: 400px;
+    padding: 30px 20px;
+    border-radius: 15px;
+    margin-top: 30px;
+    .head-form .title{
+      text-align: center;
+      color: #5e35b1;
+      font-weight: 600;
+      font-size: 24px;
+    }
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper{
+  display: none;
+}

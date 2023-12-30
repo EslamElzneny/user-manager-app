@@ -1,0 +1,65 @@
+<div class="err" *ngIf=" control && control.touched && control.errors">
+  <!-- <div *ngIf="control.hasError('notMatch')">Password and Confirm Password must be match</div> -->
+
+  <mat-error *ngIf="control.errors.required" class="text-start">*Required</mat-error>
+  <mat-error *ngIf="control.errors.minlength">*Minimum length {{control.errors.minlength.requiredLength}} characters
+  </mat-error>
+  <mat-error *ngIf="control.errors.maxlength">*Maximum length {{control.errors.maxlength.requiredLength}} characters
+  </mat-error>
+  <mat-error *ngIf="control.errors.min">*Min {{control.errors.min.min}}
+  </mat-error>
+  <mat-error *ngIf="control.errors.max">*Max {{control.errors.max.max}}
+  </mat-error>
+  <mat-error *ngIf="control.errors.email || control.errors.pattern?.requiredPattern == emailRegex">
+      *Invalid email format
+  </mat-error>
+  <mat-error *ngIf="control.errors?.fileSize?.valid">
+      *Max file size is {{control.errors?.fileSize?.maxSize}}
+  </mat-error>
+  <!-- ***** end image validation -->
+
+  <!-- ************** start password patterns  -->
+  <mat-error
+      *ngIf="(getControlName(control) == 'password' || getControlName(control) == 'password_confirmation' )  && control.hasError('notHasCapitalCase')">
+      *Password Should contain capital letters
+  </mat-error>
+  <mat-error
+      *ngIf="(getControlName(control) == 'password' || getControlName(control) == 'password_confirmation' ) && control.hasError('notHasSmallCase')">
+      *Password Should contain small letters
+  </mat-error>
+  <mat-error
+      *ngIf="(getControlName(control) == 'password' || getControlName(control) == 'password_confirmation' ) && control.hasError('notHasNumber')">
+      *Password Should contain numbers
+  </mat-error>
+  <mat-error
+      *ngIf="(getControlName(control) == 'password' || getControlName(control) == 'password_confirmation' ) && control.hasError('notHasSpecialCharacters')">
+      *Password Should contain special characters
+  </mat-error>
+  <!-- passowrd confirmation message -->
+  <mat-error *ngIf="control.errors.unmatchedPasswords && control?.value ">
+      *Passwords do not match
+  </mat-error>
+  <!-- ************** end password patterns  -->
+
+  <mat-error *ngIf="control.errors.pattern?.requiredPattern == numericalRegex">
+      *Digits Only
+  </mat-error>
+
+  <mat-error *ngIf="control.errors.pattern?.requiredPattern == alphaRegex">
+      *Letters only
+  </mat-error>
+
+  <mat-error *ngIf="control.errors.pattern?.requiredPattern == phoneRegex">
+      *Invalid phone ex:(111) 111-1111
+  </mat-error>
+
+
+  <!-- ***** start image (branding page) validation -->
+  <mat-error *ngIf="(getControlName(control) == 'image_profile') && control.errors.fileExt">
+      *File Only (JPG , PNG , JPEG)
+  </mat-error>
+  <mat-error *ngIf="(getControlName(control) == 'image_profile') && control.errors.fileSize">
+      *Max file size is 2 MB
+  </mat-error>
+
+</div>

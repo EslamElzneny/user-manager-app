@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'user-manager-app';
+  notifierOptions: any = {
+    animate: "fromTop",
+    position: ["top", "right"],
+    clickToClose: true,
+    maxStack:1
+  }
 }
