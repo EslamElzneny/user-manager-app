@@ -1,0 +1,40 @@
+.container-nav{
+    display: flex;
+    gap: 30px;
+    @media screen and (max-width:632px) {
+      flex-direction: column;
+      gap: 0;
+      width: 100%;
+    }
+
+  .left-side{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    .logo img{
+      width: 60px;
+    }
+    span{
+      font-size: 18px;
+    }
+  }
+
+  .right-side {
+    @media screen and (max-width:632px) {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .nav{
+      display: flex;
+      gap: 15px;
+    }
+  }
+
+}
+
+:host ::ng-deep .mdc-button .mdc-button__label{
+  font-size: 12px;
+}
+:host ::ng-deep .mat-toolbar.mat-primary{
+  height: unset;
+}
