@@ -1,0 +1,18 @@
+.form-profile{
+  width: 90%;
+  max-width: 400px;
+  padding: 30px 20px;
+  border-radius: 15px;
+  margin-top: 30px;
+
+  form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+::ng-deep .cdk-overlay-pane{
+  width: 95%;
+    max-width: 700px;
+}
