@@ -1,0 +1,50 @@
+.container-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 30px;
+
+  .left-side{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    .logo img{
+      width: 60px;
+    }
+    span{
+      font-size: 18px;
+    }
+  }
+
+  .right-side {
+    @media screen and (max-width:756px) {
+      display: none !important;
+    }
+    .nav{
+      display: flex;
+      gap: 15px;
+    }
+  }
+
+  .user-name{
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 5px;
+  }
+
+}
+
+::ng-deep .small-screen{
+  display: none;
+  @media screen and (max-width:756px) {
+    display: block;
+  }
+}
+
+:host ::ng-deep .mdc-button .mdc-button__label{
+  font-size: 12px;
+}
+:host ::ng-deep .mat-toolbar.mat-primary{
+  height: unset;
+}

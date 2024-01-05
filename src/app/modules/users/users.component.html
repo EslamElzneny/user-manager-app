@@ -1,1 +1,99 @@
-<p>users works!</p>
+<div class="container-users">
+
+  <div class="add-user">
+    <button (click)="openUserPopup()" mat-raised-button color="accent">Add New User</button>
+  </div>
+
+  <!-- header -->
+  <div class="header">
+    <h3 class="title">All Users</h3>
+
+    <div class="filter">
+      <div class="search-bar">
+        <mat-form-field>
+          <input [(ngModel)]="searchKeyword" matInput placeholder="Search By Name" value="">
+        </mat-form-field>
+      </div>
+      <div class="sorting">
+        <mat-form-field>
+          <mat-select  name="sort" (valueChange)="onChangeSort($event)" placeholder="Sort By Date">
+            <mat-option *ngFor="let sort of sortsList" [value]="sort.key">{{sort.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="list-users-container">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Create at</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+
+      <!-- in case data -->
+      <tbody *ngIf="!isLoading && usersList.length>0">
+        <tr *ngFor="let user of usersList|sortByDate:selectedSort|searchFirebase:searchKeyword;let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{user?.name}}</td>
+          <td>{{user?.email}}</td>
+          <td>{{user?.phone}}</td>
+          <td>{{user?.created_at|dateDisplayFirebase}}</td>
+          <td>
+            <button mat-raised-button color="primary" (click)="openUserPopup(user)" style="margin-right: 8px;"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button mat-raised-button color="warn" (click)="deleteUser(user)"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+
+      <!-- ******************************************************************** -->
+      <!-- ******************* in case loading data ***************************-->
+
+      <tbody *ngIf="isLoading">
+        <tr *ngFor="let schema of schemaList;let i = index">
+          <th scope="row"><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></th>
+          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
+          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
+          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
+          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
+          <td>
+            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <div *ngIf="!isLoading && usersList.length==0" class="no-data">
+    There is no data at the moment
+  </div>
+
+
+</div>
+
+
+<!-- confirm message template -->
+<ng-template #confirmMessage>
+  <h2 mat-dialog-title>Confirmation Message</h2>
+  <mat-dialog-content>
+    <div class="body-message">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span>Are you sure you want to delete this user?</span>
+    </div>
+  </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="confirm()">
+        <span [hidden]="loadingSubmit" color="warn">Yes</span>
+        <span [hidden]="!loadingSubmit"><i class="fa fa-refresh fa-spin"></i> Loading</span>
+      </button>
+      <button mat-button (click)="cancel()">No</button>
+    </mat-dialog-actions>
+</ng-template>

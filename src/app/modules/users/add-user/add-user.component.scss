@@ -1,0 +1,28 @@
+.form-profile{
+  form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    .group{
+      display: flex;
+      gap: 15px;
+      @media screen and (max-width:600px) {
+        flex-direction: column;
+      }
+      .form-group{
+        width: 50%;
+        @media screen and (max-width:600px) {
+          width: 100%;
+        }
+
+      }
+    }
+  }
+}
+
+::ng-deep .mat-mdc-form-field{
+  width: 100%;
+}
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper{
+  display: none;
+}

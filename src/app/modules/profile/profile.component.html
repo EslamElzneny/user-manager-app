@@ -1,1 +1,60 @@
-<p>profile works!</p>
+<div class="profile-container">
+  <div class="header"><h3 class="title">My Profile</h3></div>
+
+  <div class="form-profile">
+
+    <form action="" [formGroup]="profileForm" #form="ngForm" (ngSubmit)="save()" novalidate>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" autocomplete="off">
+      </mat-form-field>
+
+      <app-form-errors
+      [color]="'danger'"
+      [form]="form"
+      [control]="profileForm.controls['name']"
+      >
+      </app-form-errors>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" readonly formControlName="email" autocomplete="off">
+      </mat-form-field>
+
+      <app-form-errors
+      [color]="'danger'"
+      [form]="form"
+      [control]="profileForm.controls['email']"
+      >
+      </app-form-errors>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phone_number" mask='(000) 000-0000' [validation]="true" [dropSpecialCharacters]="false" autocomplete="off">
+      </mat-form-field>
+
+      <app-form-errors
+      [color]="'danger'"
+      [form]="form"
+      [control]="profileForm.controls['phone_number']"
+      >
+      </app-form-errors>
+
+      <button mat-raised-button type="submit" color="primary" [disabled]="loadingSubmit">
+        <span [hidden]="loadingSubmit">Update</span>
+        <span [hidden]="!loadingSubmit"><i class="fa fa-refresh fa-spin"></i> Loading</span>
+      </button>
+
+    </form>
+
+  </div>
+
+  <div class="d-flex align-items-center gap-3 mt-3">
+    <button mat-raised-button (click)="sendLinkToResetPassword()" [disabled]="loadingSendPassword">
+      <span [hidden]="loadingSendPassword">Send link to reset password</span>
+      <span [hidden]="!loadingSendPassword"><i class="fa fa-refresh fa-spin"></i> Loading</span>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "smart-bcfc9": {
+      "hosting": {
+        "user-manager-app": [
+          "smart-bcfc9"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "smart-bcfc9"
+  }
+}
