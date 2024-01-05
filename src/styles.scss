@@ -10,3 +10,10 @@ a {
 ul {
   list-style: none;
 }
+
+.simple-notification{
+  overflow-wrap: anywhere;
+}
+.simple-notification-wrapper{
+  z-index: 9999 !important;
+}

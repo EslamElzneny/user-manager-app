@@ -11,10 +11,12 @@ import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 @NgModule({
   declarations: [
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
+    VerifyEmailComponent
   ],
   imports: [
     CommonModule,

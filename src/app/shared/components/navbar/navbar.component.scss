@@ -1,11 +1,9 @@
 .container-nav{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
     gap: 30px;
-    @media screen and (max-width:632px) {
-      flex-direction: column;
-      gap: 0;
-      width: 100%;
-    }
 
   .left-side{
     display: flex;
@@ -20,9 +18,8 @@
   }
 
   .right-side {
-    @media screen and (max-width:632px) {
-      display: flex;
-      justify-content: flex-end;
+    @media screen and (max-width:756px) {
+      display: none !important;
     }
     .nav{
       display: flex;
@@ -30,6 +27,19 @@
     }
   }
 
+  .user-name{
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 5px;
+  }
+
+}
+
+::ng-deep .small-screen{
+  display: none;
+  @media screen and (max-width:756px) {
+    display: block;
+  }
 }
 
 :host ::ng-deep .mdc-button .mdc-button__label{
