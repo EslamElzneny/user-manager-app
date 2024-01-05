@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ErrorHandlingService } from 'src/app/core/services/error-handling.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Account, FirestoreService } from 'src/app/core/services/firestore.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,8 +23,9 @@ export class SignUpComponent implements OnInit{
   hide2 = true; // for confirm password icon
 
   constructor(private validationService: ValidationService,
+    private _fireAuth:AngularFireAuth,
     private router:Router,
-    private _api:HttpService,
+    private _fireStore:FirestoreService,
     private _auth: AuthService,
     private notificationService: NotificationsService,
     private errHandle: ErrorHandlingService){
@@ -75,28 +78,35 @@ export class SignUpComponent implements OnInit{
 
   }
 
-
   save(){
+
     if(this.signUpForm.valid && this.signUpForm.dirty){
+
       this.loadingSubmit = true;
-
-      // ******* in case success response *****
-
-      //save user data in local storage
-      // let userObj = res?.data;
-      // this._auth.setUserObj(userObj);
-      //navigate
-      // this.router.navigate(['/dashboard']);
-      //show success notification
-      // this.notificationService.success('', 'Registration has been successfully completed');
-      //close loader
-      // this.loadingSubmit = false;
+      this._fireAuth.createUserWithEmailAndPassword(
+        this.signUpForm.value.email,this.signUpForm.value.password
+      ).then(res=>{
 
 
-      // ******* in case error response *****
+        let accountInfo:Account = {
+          id:'',uid: res?.user?.uid ,
+          name: this.signUpForm.value.name,
+          phone: this.signUpForm.value.phone_number,
+        }
 
-      // this.errHandle.errorHandling(err);
-      // this.loadingSubmit = false;
+        // store reset data to fireStore
+        this._fireStore.addAccount(accountInfo).then((data:any)=>{
+          // ******* in case success response *****
+          this.sendEmailForVerification(res?.user);
+        })
+
+      }).catch(err=>{
+        // ******* in case error response *****
+        this.errHandle.errorHandling(err);
+        this.loadingSubmit = false;
+      })
+
+
 
     }else{
       this.signUpForm.markAllAsTouched();
@@ -104,5 +114,41 @@ export class SignUpComponent implements OnInit{
   }
 
 
+  sendEmailForVerification(user:any){
+
+    user?.sendEmailVerification().then((res:any)=>{
+      //show success notification
+      this.notificationService.success('','Please Check Your Email!')
+      this.router.navigate(['/auth/verify-email']);
+    }).catch((err:any)=>{
+      // ******* in case error response *****
+      this.errHandle.errorHandling(err);
+      this.loadingSubmit = false;
+    })
+
+  }
+
+
 
 }
+
+/* normal case without verification email */
+
+  // //save user data in local storage
+  // let userObj:any = {
+  //   name:this.signUpForm.value.name,
+  //   email:this.signUpForm.value.email,
+  //   phone:this.signUpForm.value.phone_number,
+  //   uid:res?.user?.uid,
+  //   docIdAccount:data?.id
+  // }
+
+  // this._auth.setUserObj(userObj);
+  // //save token in local storage
+  // this._auth.setUserToken(res?.user?.uid);
+  // //navigate
+  // this.router.navigate(['/dashboard']);
+  // //show success notification
+  // this.notificationService.success('', 'Registration has been successfully completed');
+  // //close loader
+  // this.loadingSubmit = false;

@@ -14,6 +14,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 @NgModule({
   declarations: [
     UsersComponent,
@@ -27,6 +28,7 @@ import { NgxMaskModule } from 'ngx-mask';
     MatFormFieldModule,
     MatButtonModule,
     MatDialogModule,
+    NgxSkeletonLoaderModule,
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,

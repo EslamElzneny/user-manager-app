@@ -19,7 +19,7 @@
 
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" autocomplete="off">
+        <input matInput type="email" readonly formControlName="email" autocomplete="off">
       </mat-form-field>
 
       <app-form-errors
@@ -41,51 +41,6 @@
       >
       </app-form-errors>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Current Password</mat-label>
-        <input matInput type="password" formControlName="current_password" [type]="hide ? 'password' : 'text'" autocomplete="off">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <app-form-errors
-      [color]="'danger'"
-      [form]="form"
-      [control]="profileForm.controls['current_password']"
-      >
-      </app-form-errors>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" [type]="hide1 ? 'password' : 'text'" autocomplete="off">
-        <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
-          <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <app-form-errors
-      [color]="'danger'"
-      [form]="form"
-      [control]="profileForm.controls['password']"
-      >
-      </app-form-errors>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Confirm Password</mat-label>
-        <input matInput type="password" [type]="hide2 ? 'password' : 'text'" formControlName="password_confirmation" #password_confirmation autocomplete="off">
-        <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
-          <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <app-form-errors [control]="profileForm.controls['password_confirmation']"
-      >
-      </app-form-errors>
-      <app-form-errors [control]="profileForm"
-      >
-      </app-form-errors>
-
       <button mat-raised-button type="submit" color="primary" [disabled]="loadingSubmit">
         <span [hidden]="loadingSubmit">Update</span>
         <span [hidden]="!loadingSubmit"><i class="fa fa-refresh fa-spin"></i> Loading</span>
@@ -93,6 +48,13 @@
 
     </form>
 
+  </div>
+
+  <div class="d-flex align-items-center gap-3 mt-3">
+    <button mat-raised-button (click)="sendLinkToResetPassword()" [disabled]="loadingSendPassword">
+      <span [hidden]="loadingSendPassword">Send link to reset password</span>
+      <span [hidden]="!loadingSendPassword"><i class="fa fa-refresh fa-spin"></i> Loading</span>
+    </button>
   </div>
 
 </div>
