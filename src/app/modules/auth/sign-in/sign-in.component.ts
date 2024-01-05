@@ -7,7 +7,7 @@ import { ErrorHandlingService } from 'src/app/core/services/error-handling.servi
 import { HttpService } from 'src/app/core/services/http.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { AngularFireAuth} from '@angular/fire/compat/auth';
-import { FirestoreService } from 'src/app/core/services/firestore.service';
+import { FirestoreService, getDocIdObs$ } from 'src/app/core/services/firestore.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -95,6 +95,8 @@ export class SignInComponent implements OnInit{
               userData['email'] = this.signInForm.value.email;
               userData['docIdAccount'] = data[0]?.payload.doc?.id;
             }
+            // fire doc id
+            getDocIdObs$.next(userData?.docIdAccount);
             //save user data in local storage
             this._auth.setUserObj(userData);
             //save token in local storage

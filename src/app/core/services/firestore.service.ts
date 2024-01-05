@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth.service';
+import { Subject } from 'rxjs';
+
+export let getDocIdObs$:Subject<any> = new Subject<any>();
 
 export interface Account{
   id:string,
@@ -23,7 +26,13 @@ export interface User{
 export class FirestoreService {
 
   constructor(private _fireStore:AngularFirestore,
-    private _auth:AuthService) {  }
+    private _auth:AuthService) {
+      getDocIdObs$.subscribe(id=>{
+        if(id){
+          this.docIdAccount = id;
+        }
+      })
+  }
 
   docIdAccount:string|null = this._auth.getUserObj()?.docIdAccount;
 
