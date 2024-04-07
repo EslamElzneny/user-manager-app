@@ -78,17 +78,17 @@ export class SignInComponent implements OnInit{
    }
 
    testMetaData(){
+     // OG system
+     this.metaService.updateTag({ property: 'og:title', content: 'test user app' });
+     this.metaService.updateTag({ property: 'og:url', content: `https://user-manager-app.vercel.app/dashboard/users-management?test=true` });
+     this.metaService.updateTag({ property: 'og:type', content: '' });
+     this.metaService.updateTag({ property: 'og:description', content: 'bla bla bla' });
+     this.metaService.updateTag({ property: 'og:keywords', content: 'app app' });
+     this.metaService.updateTag({ property: 'og:image', content: 'https://dashboard.i-makeup.com/storage/attribute_option/01%20Beige%20De%20Jour.png' });
+     this.metaService.updateTag({ property: 'og:locale', content: 'en' });
+     this.metaService.updateTag({ property: 'og:locale:alternate', content: 'en' });
      return this.http.get('https://fakestoreapi.com/products').subscribe(res=>{
 
-          // OG system
-          this.metaService.updateTag({ property: 'og:title', content: 'test user app' });
-          this.metaService.updateTag({ property: 'og:url', content: `https://user-manager-app.vercel.app/dashboard/users-management?test=true` });
-          this.metaService.updateTag({ property: 'og:type', content: '' });
-          this.metaService.updateTag({ property: 'og:description', content: 'bla bla bla' });
-          this.metaService.updateTag({ property: 'og:keywords', content: 'app app' });
-          this.metaService.updateTag({ property: 'og:image', content: 'https://dashboard.i-makeup.com/storage/attribute_option/01%20Beige%20De%20Jour.png' });
-          this.metaService.updateTag({ property: 'og:locale', content: 'en' });
-          this.metaService.updateTag({ property: 'og:locale:alternate', content: 'en' });
      });
    }
 
