@@ -8,6 +8,8 @@ import { HttpService } from 'src/app/core/services/http.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { AngularFireAuth} from '@angular/fire/compat/auth';
 import { FirestoreService, getDocIdObs$ } from 'src/app/core/services/firestore.service';
+import { HttpClient } from '@angular/common/http';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sign-in',
@@ -26,6 +28,9 @@ export class SignInComponent implements OnInit{
      private router:Router,
      private _fireStore:FirestoreService,
      private _auth: AuthService,
+     private http: HttpClient,
+     private title: Title,
+     private metaService: Meta,
      private notificationService: NotificationsService,
      private errHandle: ErrorHandlingService){
 
@@ -68,9 +73,24 @@ export class SignInComponent implements OnInit{
        ),
      });
 
+     this.testMetaData();
 
    }
 
+   testMetaData(){
+     return this.http.get('https://fakestoreapi.com/products').subscribe(res=>{
+
+          // OG system
+          this.metaService.updateTag({ property: 'og:title', content: 'test user app' });
+          this.metaService.updateTag({ property: 'og:url', content: `https://user-manager-app.vercel.app/dashboard/users-management?test=true` });
+          this.metaService.updateTag({ property: 'og:type', content: '' });
+          this.metaService.updateTag({ property: 'og:description', content: 'bla bla bla' });
+          this.metaService.updateTag({ property: 'og:keywords', content: 'app app' });
+          this.metaService.updateTag({ property: 'og:image', content: 'https://dashboard.i-makeup.com/storage/attribute_option/01%20Beige%20De%20Jour.png' });
+          this.metaService.updateTag({ property: 'og:locale', content: 'en' });
+          this.metaService.updateTag({ property: 'og:locale:alternate', content: 'en' });
+     });
+   }
 
    save(){
      if(this.signInForm.valid && this.signInForm.dirty){
