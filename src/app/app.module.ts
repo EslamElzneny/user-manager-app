@@ -7,10 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { ResolverComponent } from './modules/resolver/resolver.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ResolverComponent
   ],
   imports: [
     BrowserModule,
