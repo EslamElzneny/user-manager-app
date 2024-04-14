@@ -15,7 +15,7 @@ import { ResolverComponent } from './modules/resolver/resolver.component';
     ResolverComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({appId:'serverApp'}),
     SimpleNotificationsModule.forRoot({
       clickIconToClose: true
     }),
