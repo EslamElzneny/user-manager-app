@@ -10,7 +10,8 @@
     "dev:ssr": "ng run user-manager-app:serve-ssr",
     "serve:ssr": "node dist/user-manager-app/server/main.js",
     "build:ssr": "ng build && ng run user-manager-app:server",
-    "prerender": "ng run user-manager-app:prerender"
+    "prerender": "ng run user-manager-app:prerender",
+    "vercel-build": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {
