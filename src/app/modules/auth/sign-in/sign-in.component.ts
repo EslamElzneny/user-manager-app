@@ -32,9 +32,9 @@ export class SignInComponent implements OnInit{
      private errHandle: ErrorHandlingService){
 
    }
-
+   dir:any;
    ngOnInit(): void {
-
+    this.dir = 'rtl';
 
      this.signInForm=new FormGroup({
        email: new FormControl('', [

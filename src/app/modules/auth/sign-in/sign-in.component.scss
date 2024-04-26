@@ -40,3 +40,18 @@
 :host ::ng-deep .mat-mdc-form-field-subscript-wrapper{
   display: none;
 }
+.txt,
+.txt-1{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+.txt:dir(rtl){
+  left: unset;
+  right: 20px;
+}
+.sign-in-form[dir = "rtl"] .txt-1{
+  left: unset;
+  right: 20px;
+  bottom: 60px;
+}
