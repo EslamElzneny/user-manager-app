@@ -4,7 +4,7 @@ import { ResolveFn } from '@angular/router';
 import { EMPTY, Observable, catchError, delay, of } from 'rxjs';
 
 export const metaDataResolver: ResolveFn<any> = (route, state) => {
-  console.log('fire resolve!!')
+  console.log('fire resolve!!',route.params['id'])
   return getAllProducts().pipe(
     catchError(()=>{
       console.log('error');

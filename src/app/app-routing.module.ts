@@ -12,7 +12,8 @@ const routes: Routes = [
     loadChildren:()=>import("./modules/main-layout/main-layout.module").then((m)=>m.MainLayoutModule),
     canMatch:[authUserGuard]
   },
-  {path:'meta-data',component:ResolverComponent,pathMatch:"full",resolve:{products:metaDataResolver}}
+  {path:'meta-data',component:ResolverComponent,pathMatch:"full",resolve:{products:metaDataResolver}},
+  {path:'meta-data/:id',component:ResolverComponent,pathMatch:"full",resolve:{products:metaDataResolver}}
 ];
 
 @NgModule({

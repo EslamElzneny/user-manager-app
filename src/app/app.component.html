@@ -1,2 +1,3 @@
 <simple-notifications  [options]="notifierOptions"></simple-notifications>
+<div *ngIf="isLoading$ | async" class="loader">Loading...</div>
 <router-outlet></router-outlet>

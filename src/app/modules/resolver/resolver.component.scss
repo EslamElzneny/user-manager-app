@@ -1,0 +1,9 @@
+.txt{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+.txt:dir(rtl){
+  left: unset;
+  right: 20px;
+}
