@@ -22,53 +22,33 @@
   </div>
 
   <div class="list-users-container">
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Avatar</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
 
-      <!-- in case data -->
-      <tbody *ngIf="!isLoading && usersList.length>0">
-        <!-- searching => search for all users existing in usersList this is not right should use api calling is not supported/available -->
-        <tr *ngFor="let user of usersList|sortAlphabetical:selectedSort|searching:searchKeyword;let i = index">
-          <th scope="row">{{i+1}}</th>
-          <td>
-            <div class="avatar">
-                <img [src]="user.avatar" [alt]="user.name">
-            </div>
-          </td>
-          <td>{{user.name}}</td>
-          <td>{{user.email}}</td>
-          <td>
-            <div class="action-buttons">
-              <button mat-stroked-button style="margin-right: 8px;" [routerLink]="'/dashboard/users-management/' + user.id"><i class="fa-regular fa-eye"></i></button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
+    <!-- in case data -->
+    <div *ngIf="!isLoading && usersList.length>0" class="list-users">
+      <!-- searching => search for all users existing in usersList this is not right should use api calling is not supported/available -->
+      <div *ngFor="let user of usersList|sortAlphabetical:selectedSort|searching:searchKeyword;let i = index"
+          class="user-card" [routerLink]="'/dashboard/users-management/' + user.id">
+        <div class="avatar"><img [src]="user.avatar" [alt]="user.name"></div>
+        <div class="card-info">
+          <span class="name">{{user.name}}</span>
+          <span class="email">{{user.email}}</span>
+        </div>
+      </div>
+    </div>
 
-      <!-- ******************************************************************** -->
-      <!-- ******************* in case loading data ***************************-->
-
-      <tbody *ngIf="isLoading">
-        <tr *ngFor="let schema of schemaList;let i = index">
-          <th scope="row"><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></th>
-          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
-          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
-          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
-          <td><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></td>
-        </tr>
-      </tbody>
-
-    </table>
-
-
+    <!-- in case loading -->
+    <div *ngIf="isLoading" class="list-users">
+      <!-- searching => search for all users existing in usersList this is not right should use api calling is not supported/available -->
+      <div *ngFor="let user of schemaList" class="user-card" style="background-color: #fff;">
+        <div class="avatar">
+          <ngx-skeleton-loader count="1" appearance="circle" [theme]="{'width':'70px','height':'70px'}"/>
+        </div>
+        <div class="card-info" style="flex-grow: 1;">
+          <span class="name"><ngx-skeleton-loader appearance="line" [theme]="{'width':'70px'}"></ngx-skeleton-loader></span>
+          <span class="email"><ngx-skeleton-loader appearance="line"></ngx-skeleton-loader></span>
+        </div>
+      </div>
+    </div>
 
   </div>
 

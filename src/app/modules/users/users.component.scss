@@ -34,26 +34,93 @@
     @media screen and (max-width:800px) {
       overflow-x: scroll;
     }
-    table{
-      min-width: 500px;
-      .avatar img{
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        // box-shadow: 2px 2px 2px #673ab7, -2px 2px 2px #673ab7;
-      }
-      .action-buttons{
+    .list-users{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      .user-card{
         display: flex;
+        background: #9344b114;
+        border-radius: 10px;
+        padding: 20px 15px;
+        gap: 10px;
+        max-width: 295px;
+        width: 290px;
+        min-width: 290px;
+        border: 1px solid #9344b114;
+        &:hover{
+          border: 1px solid #9344b154;
+          box-shadow: 1px 1px 2px #9344b11c;
+          transition: box-shadow 0.5s;
+        }
+        cursor: pointer;
+        .avatar img{
+          border-radius: 50%;
+          width: 128px;
+          height: 128px;
+          object-fit: cover;
+        }
+        .card-info{
+          display: flex;
+          flex-direction: column;
+          padding-top: 15px;
+          gap: 5px;
+          .name{
+            font-size: 14px;
+            font-weight: 500;
+          }
+          .email{
+            font-size: 12px;
+            color: #673AB7;
+            overflow-wrap: anywhere;
+          }
+        }
+      }
+
+      @media screen and (max-width:965px) {
         justify-content: center;
       }
-    }
-    .pagination-section{
-      margin: 25px 0;
-      width: 100%;
+      @media screen and (min-width:585px) and (max-width:710px) {
+        .user-card{
+          width: 235px;
+          min-width: 235px;
+          .avatar img{
+            width: 85px;
+            height: 85px;
+          }
+        }
+      }
+      @media screen and (min-width:455px) and (max-width:584px) {
+        .user-card{
+          width: 200px;
+          min-width: 200px;
+          .avatar img{
+            width: 70px;
+            height: 70px;
+          }
+        }
+      }
+      @media screen and (max-width:583px) {
+        .user-card{
+          width: 100%;
+          min-width: unset;
+          max-width: unset;
+          .avatar img{
+            width: 70px;
+            height: 70px;
+          }
+        }
+      }
+
     }
   }
 
+  .pagination-section{
+    margin: 25px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .pagination{
     min-height: 60px;
   }
@@ -87,8 +154,7 @@
   }
 }
 
-@media screen and (max-width:540px) {
-  ::ng-deep .mat-mdc-paginator-container{
-    justify-content: center !important;
-  }
+::ng-deep .mat-mdc-paginator{
+    border-radius: 5px;
+    background-color: rgba(103, 58, 183, 0.0196078431) !important;
 }

@@ -46,4 +46,9 @@ export class UserDetailsComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    if(!this.userDetailsObservable){return}
+    this.userDetailsObservable.unsubscribe();
+  }
+
 }

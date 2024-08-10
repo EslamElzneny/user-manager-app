@@ -23,7 +23,7 @@ export let isAddNewUser:Subject<boolean> = new Subject<boolean>();
 })
 export class UsersComponent implements OnInit,OnDestroy {
 
-  schemaList:any[] = ['','','','','','','']
+  schemaList:any[] = ['','','','','','','','']
   isLoading:boolean = false;
   loadingSubmit:boolean = false;
   sortsList: any[] = [
@@ -56,7 +56,7 @@ export class UsersComponent implements OnInit,OnDestroy {
       if(params['page'] || params['pageSize']){
         // prepare payload data
         this.queryParams['page'] = +params['page'] || 1;
-        this.queryParams['per_page'] = +params['pageSize'] || 6; // note: here change value of obj not reference
+        this.queryParams['per_page'] = +params['pageSize'] || 10; // note: here change value of obj not reference
         this.getAllUsers();
       }
     })
