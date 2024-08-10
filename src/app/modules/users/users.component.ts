@@ -7,6 +7,7 @@ import { User } from 'src/app/shared/interfaces/user.interface';
 import { UsersRep } from 'src/app/shared/interfaces/usersResp.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { MetaDataService } from 'src/app/core/services/meta-data/meta-data.service';
 export interface PeriodicElement {
   name: string;
   id: string;
@@ -44,8 +45,10 @@ export class UsersComponent implements OnInit,OnDestroy {
   constructor(public dialog:MatDialog,
     private _http:HttpService,
     private _router:Router,
+    private _metaService:MetaDataService,
     private _activatedRoute:ActivatedRoute,
     private errorHandling:ErrorHandlingService){
+      _metaService.updatePageTitle('Users List');
   }
 
   platform_id:Object = inject(PLATFORM_ID);

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ErrorHandlingService } from 'src/app/core/services/error-handling.service';
 import { FirestoreService } from 'src/app/core/services/firestore.service';
 import { HttpService } from 'src/app/core/services/http.service';
+import { MetaDataService } from 'src/app/core/services/meta-data/meta-data.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { updatedUserObj } from 'src/app/shared/components/navbar/navbar.component';
 
@@ -27,9 +28,11 @@ export class ProfileComponent implements OnInit{
      private router:Router,
      private _auth: AuthService,
      private _fireStore:FirestoreService,
+     private _metaService:MetaDataService,
      private _fireAuth:AngularFireAuth,
      private notificationService: NotificationsService,
      private errHandle: ErrorHandlingService){
+      _metaService.updatePageTitle('Profile Page');
 
    }
 

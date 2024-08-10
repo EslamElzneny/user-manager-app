@@ -4,6 +4,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { ErrorHandlingService } from 'src/app/core/services/error-handling.service';
 import { HttpService } from 'src/app/core/services/http.service';
+import { MetaDataService } from 'src/app/core/services/meta-data/meta-data.service';
 import { User } from 'src/app/shared/interfaces/user.interface';
 
 @Component({
@@ -16,6 +17,7 @@ export class UserDetailsComponent implements OnInit {
   constructor(
     private _http:HttpService,
     private _activatedRoute:ActivatedRoute,
+    private _metaService:MetaDataService,
     private notify: NotificationsService,
   ){
 
@@ -40,8 +42,10 @@ export class UserDetailsComponent implements OnInit {
       this.userInfo = (res?.data) as User;
       this.userInfo['name'] = this.userInfo.first_name + ' ' + this.userInfo.last_name;
       this.isLoading = false;
+      this._metaService.updatePageTitle(this.userInfo.name);
     },err=>{
       this.notify.error('', 'Invalid Url or No data Found!');
+      this._metaService.updatePageTitle('error | User Manager App');
       this.isLoading = false;
     })
   }
