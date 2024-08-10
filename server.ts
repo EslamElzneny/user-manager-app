@@ -6,6 +6,7 @@ import * as express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { AppServerModule } from './src/main.server';
+import { CacheService } from 'cache.service';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -29,8 +30,24 @@ export function app(): express.Express {
   }));
 
   // All regular routes use the Universal engine
+  const cacheService = new CacheService();
   server.get('*', (req, res) => {
-    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+    const cachedResponse = cacheService.get(req.url);
+    if (cachedResponse) {
+      return res.send(cachedResponse);
+    }
+    return res.render(indexHtml, {
+      req,
+      providers: [
+        { provide: APP_BASE_HREF, useValue: req.baseUrl }
+      ]
+    },(error,html)=>{
+      if (error) {
+        return res.status(500).send(error);
+      }
+      cacheService.set(req.url, html);
+      return res.send(html);
+    });
   });
 
   return server;

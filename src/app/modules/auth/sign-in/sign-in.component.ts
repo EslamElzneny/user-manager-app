@@ -10,6 +10,7 @@ import { AngularFireAuth} from '@angular/fire/compat/auth';
 import { FirestoreService, getDocIdObs$ } from 'src/app/core/services/firestore.service';
 import { HttpClient } from '@angular/common/http';
 import { Meta, Title } from '@angular/platform-browser';
+import { MetaDataService } from 'src/app/core/services/meta-data/meta-data.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -28,13 +29,13 @@ export class SignInComponent implements OnInit{
      private router:Router,
      private _fireStore:FirestoreService,
      private _auth: AuthService,
+     private _metaService:MetaDataService,
      private notificationService: NotificationsService,
      private errHandle: ErrorHandlingService){
-
+      _metaService.updatePageTitle('Sign In | User Manager App');
+      this._metaService.updateMetaData('Sign In | User Manager App',"User management systems allow administrators to manage users' access to devices, software, and services. This includes managing permissions, monitoring usage, and providing authenticated access. User management is a core part of Identity and Access Management",'https://user-manager-app.vercel.app/assets/images/logo.webp')
    }
-   dir:any;
    ngOnInit(): void {
-    this.dir = 'rtl';
 
      this.signInForm=new FormGroup({
        email: new FormControl('', [
@@ -47,25 +48,6 @@ export class SignInComponent implements OnInit{
          '',
          Validators.compose([
            Validators.required,
-           Validators.minLength(8),
-           Validators.maxLength(35),
-           // accept two arguments pattern style and error message
-           this.validationService.patternValidator(
-             this.validationService.passwordCapitalLetterPatter,
-             { notHasCapitalCase: true }
-           ),
-           this.validationService.patternValidator(
-             this.validationService.passwordSmallLetterPatter,
-             { notHasSmallCase: true }
-           ),
-           this.validationService.patternValidator(
-             this.validationService.passwordNumbersPattern,
-             { notHasNumber: true }
-           ),
-           this.validationService.patternValidator(
-             this.validationService.passwordSpecialCharPattern,
-             { notHasSpecialCharacters: true }
-           ),
          ])
        ),
      });

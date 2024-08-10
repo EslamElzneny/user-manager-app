@@ -10,15 +10,18 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
-import { AddUserComponent } from './add-user/add-user.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MatPaginatorModule} from '@angular/material/paginator';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { SearchFirebasePipe } from 'src/app/shared/pipes/search-firebase.pipe';
+import { SortAlphabeticalPipe } from 'src/app/shared/pipes/sort-alphabetical.pipe';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     UsersComponent,
-    AddUserComponent
+    UserDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -29,10 +32,13 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     MatButtonModule,
     MatDialogModule,
     NgxSkeletonLoaderModule,
-    FormsModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
     MatIconModule,
-    SharedModule,
+    SearchFirebasePipe,
+    FormsModule,
+    SortAlphabeticalPipe,
+    RouterModule,
     NgxMaskModule.forRoot(),
     UsersRoutingModule
   ]

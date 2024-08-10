@@ -1,10 +1,12 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddUserComponent } from './add-user/add-user.component';
 import { Subject } from 'rxjs';
-import { FirestoreService, User } from 'src/app/core/services/firestore.service';
 import { ErrorHandlingService } from 'src/app/core/services/error-handling.service';
-import { NotificationsService } from 'angular2-notifications';
+import { HttpService } from 'src/app/core/services/http.service';
+import { User } from 'src/app/shared/interfaces/user.interface';
+import { UsersRep } from 'src/app/shared/interfaces/usersResp.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 export interface PeriodicElement {
   name: string;
   id: string;
@@ -12,7 +14,7 @@ export interface PeriodicElement {
   phone: string;
   created_at:Date
 }
-type Sort = 'asc' | 'desc';
+type Sort = 'a-z' | 'z-a';
 export let isAddNewUser:Subject<boolean> = new Subject<boolean>();
 @Component({
   selector: 'app-users',
@@ -25,25 +27,40 @@ export class UsersComponent implements OnInit,OnDestroy {
   isLoading:boolean = false;
   loadingSubmit:boolean = false;
   sortsList: any[] = [
-    { name: 'Newest Created First', key: 'asc' },
-    { name: 'Oldest Created First', key: 'desc' },
+    {name: 'From: A-Z', key: 'a-z'},
+    {name: 'From: Z-A', key: 'z-a'},
   ];
   usersObs$:any;
-  usersList:any[] = [];
-  @ViewChild('confirmMessage') confirmMessage!: TemplateRef<any>;
-  dialogRefConfirmMsg:any;
-  dialogRefUser:any;
-  selectedUser!:User;
-  selectedSort:Sort = 'asc'
+  usersList:User[] = [];
+  // pagination info
+  currentPage:number = 1;
+  perPage:number = 0;
+  totalItems:number = 0;
+  queryParams:any = {};
+  // end pagination info
+  selectedSort:Sort = 'a-z'
   searchKeyword:any;
 
   constructor(public dialog:MatDialog,
-    private _fireStore:FirestoreService,
-    private notificationService: NotificationsService,
+    private _http:HttpService,
+    private _router:Router,
+    private _activatedRoute:ActivatedRoute,
     private errorHandling:ErrorHandlingService){
   }
 
+  platform_id:Object = inject(PLATFORM_ID);
+  isMobile:boolean = true;
   ngOnInit(): void {
+
+    this._activatedRoute.queryParams.subscribe(params=>{
+      if(params['page'] || params['pageSize']){
+        // prepare payload data
+        this.queryParams['page'] = +params['page'] || 1;
+        this.queryParams['per_page'] = +params['pageSize'] || 6; // note: here change value of obj not reference
+        this.getAllUsers();
+      }
+    })
+
     this.getAllUsers();
     // in case add or edit user call function to get all users
     isAddNewUser.subscribe(newUser=>{
@@ -51,56 +68,59 @@ export class UsersComponent implements OnInit,OnDestroy {
         this.getAllUsers();
       }
     })
+
+    if(isPlatformBrowser(this.platform_id)){
+     this.isMobileView();
+    }
+
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.isMobileView();
+  }
+
+  isMobileView(){
+    if(document.body.clientWidth < 676){
+      this.isMobile = true;
+    }else{
+      this.isMobile = false;
+    }
   }
 
   getAllUsers(){
+    // open skeleton
     this.isLoading = true;
-    this.usersObs$ = this._fireStore.getAllUsers().subscribe(res=>{
+    this.usersObs$ = this._http.getReq('/users',{params:this.queryParams}).subscribe((res:UsersRep)=>{
       // fetch all data and assign to variable
-        this.usersList = res.map((d:any)=>{
-          const data:any = d.payload.doc.data();
-          data['id'] = d.payload.doc.id
-          return data;
-        })
-        // close loading
-        this.isLoading = false;
+      this.usersList = res.data.map((user:User) => ({
+        ...user,
+        name: `${user.first_name} ${user.last_name}`
+      }));
+      // assign pagination info to variables
+      this.currentPage = +res.page - 1; // pageIndex start from 0
+      this.perPage = +res.per_page;
+      this.totalItems = +res.total;
+      // close loading
+      this.isLoading = false;
+      this.searchKeyword = '';
     },err=>{
-        this.errorHandling.errorHandling(err);
-        this.isLoading = false
+      this.errorHandling.errorHandling(err);
+      this.isLoading = false
     })
   }
-
-  openUserPopup(user?:User){
-    this.dialogRefUser = this.dialog.open(AddUserComponent,{data:user,maxWidth:'750px',width:'95%'})
-  }
-
-  deleteUser(user:User){
-    this.selectedUser = user;
-    this.dialogRefConfirmMsg = this.dialog.open(this.confirmMessage);
-  }
-
- confirm(){
-  this.loadingSubmit = true;
-  this._fireStore.deleteUser(this.selectedUser).then(res=>{
-    this.loadingSubmit = false;
-    //show success notification
-    this.notificationService.success('', 'Delete user has been successfully');
-    // close dialog
-    this.dialogRefConfirmMsg.close();
-  }).catch(err=>{
-    this.errorHandling.errorHandling(err);
-    this.loadingSubmit = false;
-  })
- }
-
- cancel(){
-  this.dialogRefConfirmMsg.close();
- }
 
  onChangeSort(e:any){
   this.isLoading = true;
   setTimeout(()=>{this.isLoading = false},500)
   this.selectedSort = e;
+ }
+
+ paginate(e:any){
+    this._router.navigate([],{queryParams:{
+      page:e?.pageIndex + 1,
+      pageSize:e?.pageSize,
+    }})
  }
 
  ngOnDestroy(): void {

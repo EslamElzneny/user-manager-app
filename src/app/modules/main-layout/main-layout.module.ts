@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MainLayoutRoutingModule } from './main-layout-routing.module';
 import { MainLayoutComponent } from './main-layout.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { NavbarComponent } from 'src/app/shared/components/navbar/navbar.component';
 
 
 @NgModule({
@@ -12,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    NavbarComponent,
     MainLayoutRoutingModule
   ]
 })

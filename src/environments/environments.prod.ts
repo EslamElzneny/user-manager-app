@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  baseUrl: '',
+  baseUrl: 'https://reqres.in/api',
+  hostUrl:'https://user-manager-app.vercel.app',
   firebaseConfig : {
     apiKey: "AIzaSyBbyUSpOlkcUq_a3dzbYV-NUCkeMybPHts",
     authDomain: "smart-bcfc9.firebaseapp.com",

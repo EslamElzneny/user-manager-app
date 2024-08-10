@@ -1,0 +1,37 @@
+<div class="container-user-details">
+  <div class="header">
+    <div class="back-arrow" routerLink="/dashboard/users-management"><i class="fa-solid fa-arrow-left"></i></div>
+    <h3 class="title">User Profile</h3>
+  </div>
+
+  <div *ngIf="!isLoading && userInfo?.id" class="content-details">
+
+    <div class="profile-image-container">
+      <div class="title">Profile Image</div>
+      <div class="avatar"><img [src]="userInfo.avatar" [alt]="userInfo.name"></div>
+      <div class="user-name">{{ userInfo.name }}</div>
+    </div>
+
+    <div class="personal-info">
+      <div class="title">Personal</div>
+      <div class="personal-details">
+        <div class="label">First Name:-</div>
+        <div class="value">{{ userInfo.first_name }}</div>
+      </div>
+      <div class="personal-details">
+        <div class="label">Last Name:-</div>
+        <div class="value">{{ userInfo.last_name }}</div>
+      </div>
+      <div class="personal-details">
+        <div class="label">Email:-</div>
+        <div class="value">{{ userInfo.email }}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="!isLoading && !userInfo?.id" class="no-user-exist">
+    No Data Found!
+  </div>
+
+</div>

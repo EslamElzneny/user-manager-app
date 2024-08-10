@@ -25,17 +25,17 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._showLoaderEvent$ = this.router.events.pipe(
-      filter(e=> e instanceof ResolveStart),
-      mapTo(true)
-    );
+    // this._showLoaderEvent$ = this.router.events.pipe(
+    //   filter(e=> e instanceof ResolveStart),
+    //   mapTo(true)
+    // );
 
-    this._hideLoaderEvent$ = this.router.events.pipe(
-      filter(e=> e instanceof ResolveEnd),
-      mapTo(false)
-    );
+    // this._hideLoaderEvent$ = this.router.events.pipe(
+    //   filter(e=> e instanceof ResolveEnd),
+    //   mapTo(false)
+    // );
 
-    this.isLoading$ = merge(this._hideLoaderEvent$,this._showLoaderEvent$);
+    // this.isLoading$ = merge(this._hideLoaderEvent$,this._showLoaderEvent$);
 
   }
 

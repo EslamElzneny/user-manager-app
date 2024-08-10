@@ -6,13 +6,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
-import { HttpClientModule } from '@angular/common/http';
-import { ResolverComponent } from './modules/resolver/resolver.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpCachingInterceptor } from './core/interceptor/http-caching.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ResolverComponent
+    AppComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId:'serverApp'}),
@@ -24,7 +23,13 @@ import { ResolverComponent } from './modules/resolver/resolver.component';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpCachingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
+  standalone:true,
+  imports:[CommonModule,MatFormFieldModule],
   selector: 'app-form-errors',
   templateUrl: './form-errors.component.html',
   styleUrls: ['./form-errors.component.scss']

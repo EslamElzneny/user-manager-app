@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'searchFirebase'
+  standalone:true,
+  name: 'searching'
 })
 export class SearchFirebasePipe implements PipeTransform {
 

@@ -8,6 +8,7 @@ import { HttpService } from 'src/app/core/services/http.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Account, FirestoreService } from 'src/app/core/services/firestore.service';
+import { MetaDataService } from 'src/app/core/services/meta-data/meta-data.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,9 +28,11 @@ export class SignUpComponent implements OnInit{
     private router:Router,
     private _fireStore:FirestoreService,
     private _auth: AuthService,
+    private _metaService:MetaDataService,
     private notificationService: NotificationsService,
     private errHandle: ErrorHandlingService){
-
+      _metaService.updatePageTitle('Sign Up | User Manager App');
+      this._metaService.updateMetaData('Sign Up | User Manager App',"User management systems allow administrators to manage users' access to devices, software, and services. This includes managing permissions, monitoring usage, and providing authenticated access. User management is a core part of Identity and Access Management",'https://user-manager-app.vercel.app/assets/images/logo.webp')
   }
 
   ngOnInit(): void {

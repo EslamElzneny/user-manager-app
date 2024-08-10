@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 
 @Pipe({
-  name: 'dateDisplayFirebase'
+  standalone:true,
+  name: 'dateDisplayFirebase',
 })
 export class DateDisplayFirebasePipe implements PipeTransform {
 

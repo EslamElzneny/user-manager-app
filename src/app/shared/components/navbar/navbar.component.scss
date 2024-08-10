@@ -33,6 +33,21 @@
     margin-right: 5px;
   }
 
+  @media screen and (max-width:400px) {
+    gap: 10px;
+    .left-side{
+      .logo img{
+        width: 50px;
+      }
+      span{
+        font-size: 14px;
+      }
+    }
+    .user-name{
+      font-size: 12px;
+    }
+  }
+
 }
 
 ::ng-deep .small-screen{
@@ -47,4 +62,10 @@
 }
 :host ::ng-deep .mat-toolbar.mat-primary{
   height: unset;
+}
+:host ::ng-deep .mat-toolbar.mat-primary{
+  background: linear-gradient(90deg, rgba(103,58,183,1) 46%, rgba(165,58,183,1) 69%);
+}
+button{
+  border: 0;
 }
